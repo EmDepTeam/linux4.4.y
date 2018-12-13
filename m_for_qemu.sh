@@ -12,5 +12,6 @@ make zImage -j2
 
 make dtbs
 
-cp -fv arch/arm/boot/zImage ../for_qemu/
-cp -fv arch/arm/boot/dts/*ca9.dtb ../for_qemu/
+cp -fv ./arch/arm/boot/zImage ../for_qemu/
+cp -fv ./arch/arm/boot/dts/*ca9.dtb ../for_qemu/
+cp -fv ./vmlinux ../for_qemu
