@@ -6,12 +6,20 @@
 ##########################################################
 #!/bin/bash
 
-make vexpress_defconfig
+ARCH=arm64
 
-make zImage -j2
+if [ $ARCH == "arm64" ]; then
+	echo "Build arm64 ..."
+	make defconfig #arm64
+	make all -j4
+	cp arch/arm64/boot/Image ../for_qemu/
+else
+	echo "Build arm ..."
+	make vexpress_defconfig
+	make zImage -j2
+	make dtbs
+	cp -fv ./arch/arm/boot/zImage ../for_qemu/
+	cp -fv ./arch/arm/boot/dts/*ca9.dtb ../for_qemu/
+fi
 
-make dtbs
-
-cp -fv ./arch/arm/boot/zImage ../for_qemu/
-cp -fv ./arch/arm/boot/dts/*ca9.dtb ../for_qemu/
 cp -fv ./vmlinux ../for_qemu
