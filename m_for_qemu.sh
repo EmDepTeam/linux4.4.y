@@ -7,19 +7,20 @@
 #!/bin/bash
 
 ARCH=arm64
+IMAGE="${TOPDIR}/image_file"
 
 if [ $ARCH == "arm64" ]; then
 	echo "Build arm64 ..."
 	make defconfig #arm64
 	make all -j4
-	cp arch/arm64/boot/Image ../for_qemu/
+	cp -fv ./arch/arm64/boot/Image ${IMAGE}
 else
 	echo "Build arm ..."
 	make vexpress_defconfig
 	make zImage -j2
 	make dtbs
-	cp -fv ./arch/arm/boot/zImage ../for_qemu/
-	cp -fv ./arch/arm/boot/dts/*ca9.dtb ../for_qemu/
+	cp -fv ./arch/arm/boot/zImage ${IMAGE}
+	cp -fv ./arch/arm/boot/dts/*ca9.dtb ${IMAGE}
 fi
 
-cp -fv ./vmlinux ../for_qemu
+cp -fv ./vmlinux ${IMAGE}
